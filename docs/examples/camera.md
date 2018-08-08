@@ -41,3 +41,31 @@ Take photo:
 ```bash
 fswebcam -d /dev/video0 -r 640x480 image.jpg
 ```
+
+## Video streaming
+
+For a start you need to configure network: [Wi-Fi](../connectivity/wifi), [Ethernet](../connectivity/ethernet) or [USB-Ethernet](../connectivity/usb-ethernet).
+
+For video streaming you can use mjpg-streamer, which recipe you can find in meta-emlid-neutis-examples.
+
+Start stream with the following command:
+
+```bash
+mjpg_streamer -i "input_uvc.so -d /dev/video0 -r 1280x720 -y 1 -n" -o "output_http.so -p 8080 -w /usr/share/mjpg-streamer/www/"
+```
+
+Here are some mjpg_streamer's options:
+```
+-i: input device, "input_uvc.so" means it takes input from a camera;
+-o: output device, "output_http.so" means the it transmits data via http;
+-d: device node of camera;
+-r: resolution of the video device;
+-y: camera's data format: 1:yuyv, 2:yvyu, 3:uyvy 4:vyuy;
+-n: disable the dynctrls function;
+-p: TCP port for this HTTP server;
+-w: path to folder that contains web pages;
+```
+
+Type [Neutis IP]:[Port] in the address bar of your browser for getting access to video stream:
+
+![mjpg_display](../../img/examples/mjpg_display.png)</a>
